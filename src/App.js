@@ -1,7 +1,8 @@
-import Card from "./components/Card";
+import Card from "./components/Card/index";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
-
+import React from "react";
+// import useState from "useState";
 function App() {
   const arr = [
     {
@@ -16,13 +17,13 @@ function App() {
       imageUrl: "/image/sneakers/2.jpg",
     },
     {
-      title: "Мужские кроссовки Nike Air Max 270",
-      price: 16999,
+      title: "Мужские кроссовки",
+      price: 10999,
       imageUrl: "/image/sneakers/3.jpg",
     },
     {
-      title: "Мужские кроссовки Nike Air Max 270",
-      price: 16999,
+      title: "Мужские кроссовки Puma Air Max",
+      price: 8999,
       imageUrl: "/image/sneakers/4.jpg",
     },
   ];
@@ -50,7 +51,13 @@ function App() {
 
         <div className="d-flex">
           {arr.map((obj) => (
-            <Card title={obj.title} price={obj.price} imageUrl={obj.imageUrl} />
+            <Card
+              title={obj.title}
+              price={obj.price}
+              imageUrl={obj.imageUrl}
+              onFovarit={() => console.log(obj)}
+              onPlus={() => console.log(obj)}
+            />
           ))}
         </div>
       </div>
