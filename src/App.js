@@ -4,36 +4,26 @@ import Header from "./components/Header";
 import React from "react";
 // import useState from "useState";
 function App() {
-  const arr = [
-    {
-      title: "Мужские кроссовки Nike Blaser Mid Suede",
-      price: 12999,
-      imageUrl: "/image/sneakers/1.jpg",
-    },
+  const arr = [];
+  const [cardOpened, setCardOpened] = React.useState(false);
+  const [items, setItems] = React.useState([]);
 
-    {
-      title: "Мужские кроссовки Nike Air Max 270",
-      price: 16999,
-      imageUrl: "/image/sneakers/2.jpg",
-    },
-    {
-      title: "Мужские кроссовки",
-      price: 10999,
-      imageUrl: "/image/sneakers/3.jpg",
-    },
-    {
-      title: "Мужские кроссовки Puma Air Max",
-      price: 8999,
-      imageUrl: "/image/sneakers/4.jpg",
-    },
-  ];
+  React.useEffect(() => {
+    fetch("https://617310d7110a740017222f6b.mockapi.io/items")
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        setItems(json);
+      });
+  }, []);
 
   return (
     <div className="wrapper clear">
-      {/*  block basket */}
-      <Drawer />
-      {/* header */}
-      <Header />
+      {/* при клике onClose корзина закроется / будет false */}
+      {cardOpened && <Drawer onClose={() => setCardOpened(false)} />}
+      {/* при клике onClickCart корзина откроется  / буде  true */}
+      <Header onClickCart={() => setCardOpened(true)} />
       {/* contnet  */}
       <div className="content p-40">
         <div className="d-flex justify-between align-center mb-40">
@@ -49,8 +39,8 @@ function App() {
           </div>
         </div>
 
-        <div className="d-flex">
-          {arr.map((obj) => (
+        <div className="d-flex flex-wrap">
+          {items.map((obj) => (
             <Card
               title={obj.title}
               price={obj.price}

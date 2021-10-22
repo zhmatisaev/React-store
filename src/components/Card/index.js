@@ -7,6 +7,7 @@ function Card(props) {
   let onClickPlus = () => {
     setIsAdded(!isAdded);
   };
+
   return (
     //После разделение на модулей
     //обратимся  классу card через styles className={styles.card}
@@ -21,14 +22,13 @@ function Card(props) {
           <p> Цена:</p>
           <p> {props.price}</p>
         </div>
-        {/* <button className="button" onClick={props.onPlus}> */}
         <img
           className={styles.plus}
           onClick={onClickPlus}
+          // если isAdded  true btn-checked.svg иначе false btn-plus.svg
           src={isAdded ? "/image/btn-checked.svg" : "/image/btn-plus.svg"}
           alt="Plus"
         />
-        {/* </button> */}
       </div>
     </div>
   );
