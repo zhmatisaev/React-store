@@ -9,6 +9,7 @@ function Header(props) {
           width="40px"
           height="40px"
           src="/image/logo.png"
+          alt="logo"
         />
         <div className="headerInfo">
           <h3 className="text-uppercase">React Sneakers</h3>
@@ -17,11 +18,16 @@ function Header(props) {
       </div>
       <ul className="d-flex">
         <li onClick={props.onClickCart} className="mr-30 cu-p">
-          <img width="18px" height="18px" src="/image/shopping-cart.png" />
+          <img
+            width="18px"
+            height="18px"
+            src="/image/shopping-cart.png"
+            alt="cart"
+          />
           <span> 1205 руб.</span>
         </li>
         <li>
-          <img width="18px" height="18px" src="/image/user.png" />
+          <img width="18px" height="18px" src="/image/user.png" alt="user" />
         </li>
       </ul>
     </header>
