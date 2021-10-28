@@ -1,6 +1,9 @@
-import Card from "./components/Card/index";
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
+import Home from "./pages/Home";
+
+import { Route } from "react-router-dom";
+
 import React from "react";
 import axios from "axios";
 import "./index.scss";
@@ -8,11 +11,11 @@ import "./index.scss";
 function App() {
   const [cardOpened, setCardOpened] = React.useState(false);
   const [items, setItems] = React.useState([]);
-
   const [cartItems, setCartItems] = React.useState([]);
-
   //  для поиска
   const [searchValue, setSearchValue] = React.useState("");
+  //  для хранение favorit товаров
+  const [favorites, setFavorites] = React.useState("");
 
   React.useEffect(() => {
     //  1-ой вариант запрос сделан с помощью  fetch
@@ -49,9 +52,15 @@ function App() {
 
   const onRemoveItem = (id) => {
     console.log(id);
-    // axios.delete(`https://617310d7110a740017222f6b.mockapi.io/cart/${id}`);
+    //  onRemoveItem при нажатие удаляет  карточки из корзины и из бэкенде по запросу axios.delete
+    axios.delete(`https://617310d7110a740017222f6b.mockapi.io/cart/${id}`);
     // дай мне пред массив возми все что в нем и пробежись по нему от филтруй тот эл которого id который передал в эту функцию
     setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+  //  Функция для добавления в favorites
+  const onAddToFavorit = (obj) => {
+    axios.post("https://617310d7110a740017222f6b.mockapi.io/favorites", obj);
+    setFavorites((prev) => [...prev, obj]);
   };
   const onChangeSearchInput = (event) => {
     setSearchValue(event.target.value);
@@ -64,7 +73,6 @@ function App() {
       {cardOpened && (
         <Drawer
           items={cartItems}
-          // onDelete={() => setDeleteItem(false)}
           onClose={() => setCardOpened(false)}
           onRemove={onRemoveItem}
         />
@@ -72,58 +80,16 @@ function App() {
       {/* при клике onClickCart корзина откроется  / буде  true */}
       <Header onClickCart={() => setCardOpened(true)} />
       {/* contnet  */}
-      <div className="content p-40">
-        <div className="d-flex justify-between align-center mb-40">
-          <h1>
-            {searchValue
-              ? `поиск по запросу: "${searchValue}"`
-              : "Все кроссовки"}
-          </h1>
-          <div className="search-blok d-flex">
-            <img
-              width="22px"
-              height="22px"
-              src="/image/search.svg"
-              alt="search"
-            />
-            {/*  если в (searchValue input) есть текст  */}
-            {searchValue && (
-              // выполнять этот част. появиться кнопка х
-              <img
-                onClick={() => setSearchValue("")}
-                className="clear cu-p"
-                src="/image/btn-remove.svg"
-                alt="Remove"
-              />
-            )}
-
-            <input
-              onChange={onChangeSearchInput}
-              value={searchValue} // input делает контролируемым
-              placeholder="search..."
-            />
-          </div>
-        </div>
-
-        <div className="d-flex flex-wrap">
-          {items
-            // пройти по массивом и найти все что будет написано в  searchValue.
-            // title.toLowerCase() переведет на нижний регистр поиск будет даже если маленькой буквой
-            .filter((item) =>
-              item.title.toLowerCase().includes(searchValue.toLowerCase())
-            )
-            .map((item, index) => (
-              <Card
-                key={index}
-                title={item.title}
-                price={item.price}
-                imageUrl={item.imageUrl}
-                onFovarit={() => console.log("Добавили в закладки")}
-                onPlus={(obj) => onAddtoCart(obj)}
-              />
-            ))}
-        </div>
-      </div>
+      <Route path="/">
+        <Home
+          items={items}
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          onChangeSearchInput={onChangeSearchInput}
+          onAddToFavorit={onAddToFavorit}
+          onAddtoCart={onAddtoCart}
+        />
+      </Route>
     </div>
   );
 }
