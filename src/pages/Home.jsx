@@ -54,7 +54,7 @@ function Home({
               title={item.title}
               price={item.price}
               imageUrl={item.imageUrl}
-              onFovarit={(obj) => onAddToFavorit(obj)}
+              onFavorit={(obj) => onAddToFavorit(obj)}
               onPlus={(obj) => onAddtoCart(obj)}
             />
           ))}
