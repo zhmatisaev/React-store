@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../components/Card/index";
+import AppContext from "../context";
 
 function Home({
   items,
@@ -8,7 +9,29 @@ function Home({
   onChangeSearchInput,
   onAddToFavorit,
   onAddtoCart,
+  isLoading,
 }) {
+  //   const { isAddedItem } = React.useContext(AppContext);
+  const renderItems = () => {
+    // пройти по массивом и найти все что будет написано в  searchValue.
+    // title.toLowerCase() переведет на нижний регистр поиск будет даже если маленькой буквой
+    const filteredItems = items.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    return (isLoading ? [...Array(8)] : filteredItems).map((item, index) => (
+      <Card
+        key={index}
+        //   title={item.title}
+        //   price={item.price}
+        //   imageUrl={item.imageUrl}
+        onFavorit={(obj) => onAddToFavorit(obj)}
+        onPlus={(obj) => onAddtoCart(obj)}
+        // added={isAddedItem(item && item.id)}
+        loading={isLoading}
+        {...item}
+      />
+    ));
+  };
   return (
     <div className="content p-40">
       <div className="d-flex justify-between align-center mb-40">
@@ -41,24 +64,7 @@ function Home({
         </div>
       </div>
 
-      <div className="d-flex flex-wrap">
-        {items
-          // пройти по массивом и найти все что будет написано в  searchValue.
-          // title.toLowerCase() переведет на нижний регистр поиск будет даже если маленькой буквой
-          .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item, index) => (
-            <Card
-              key={index}
-              title={item.title}
-              price={item.price}
-              imageUrl={item.imageUrl}
-              onFavorit={(obj) => onAddToFavorit(obj)}
-              onPlus={(obj) => onAddtoCart(obj)}
-            />
-          ))}
-      </div>
+      <div className="d-flex flex-wrap">{renderItems()}</div>
     </div>
   );
 }
