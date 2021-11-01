@@ -7,6 +7,7 @@ import AppContext from "./context";
 import React from "react";
 import axios from "axios";
 import "./index.scss";
+import Orders from "./pages/Orders.jsx";
 
 function App() {
   const [cardOpened, setCardOpened] = React.useState(false);
@@ -16,7 +17,6 @@ function App() {
   const [searchValue, setSearchValue] = React.useState("");
   //  для хранение favorit товаров
   const [favorites, setFavorites] = React.useState("");
-  // skeleton
   const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
@@ -53,7 +53,7 @@ function App() {
     }
     fetchData();
   }, []);
-  // при нажатия на плюс функция onAddtoCart добавляет товар в корзину
+  // при нажатия на кнопку плюс функция onAddtoCart добавляет товар в корзину
   const onAddtoCart = (obj) => {
     // try {
     if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
@@ -73,9 +73,9 @@ function App() {
 
   const onRemoveItem = (id) => {
     console.log(id);
-    //  onRemoveItem при нажатие удаляет  карточки из корзины и из бэкенде по запросу axios.delete
+    //  onRemoveItem при нажатия удаляет  карточки из корзины и из бэкенде по запросу axios.delete
     axios.delete(`https://617310d7110a740017222f6b.mockapi.io/cart/${id}`);
-    // дай мне пред массив возми все что в нем и пробежись по нему от филтруй тот эл которого id который передал в эту функцию
+    // дай мне пред массив возми все что в нем есть и пробежись по нему отфилтруй тот эл которого id который передал в эту функцию
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
@@ -117,6 +117,7 @@ function App() {
         cartItems,
         favorites,
         isAddedItem,
+        onAddtoCart,
         onAddToFavorit,
         setCardOpened,
         setCartItems,
@@ -149,6 +150,10 @@ function App() {
         </Route>
         <Route path="/favorites" exact>
           <Favorites />
+        </Route>
+
+        <Route path="/orders" exact>
+          <Orders />
         </Route>
       </div>
       )

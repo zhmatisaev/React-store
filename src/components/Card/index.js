@@ -49,13 +49,15 @@ function Card({
         </ContentLoader>
       ) : (
         <>
-          <div className={styles.favorite} onClick={onClickFavorite}>
-            {/* если  isFavorit true фото с красным светом если false без света*/}
-            <img
-              src={isFavorit ? "/image/liked.svg" : "/image/unliked.svg"}
-              alt="unliked"
-            />
-          </div>
+          {onFavorit && (
+            <div className={styles.favorite} onClick={onClickFavorite}>
+              {/* если  isFavorit true фото с красным светом если false без света*/}
+              <img
+                src={isFavorit ? "/image/liked.svg" : "/image/unliked.svg"}
+                alt="unliked"
+              />
+            </div>
+          )}
           <img width="100%" height={135} src={imageUrl} alt="sneakers" />
           <h5>{title}</h5>
           <div className="d-flex justify-between align-center">
@@ -63,17 +65,19 @@ function Card({
               <p> Цена:</p>
               <p> {price}</p>
             </div>
-            <img
-              className={styles.plus}
-              onClick={onClickPlus}
-              // если isAdded  true btn-checked.svg иначе false btn-plus.svg
-              src={
-                isAddedItem(id)
-                  ? "/image/btn-checked.svg"
-                  : "/image/btn-plus.svg"
-              }
-              alt="Plus"
-            />
+            {onPlus && (
+              <img
+                className={styles.plus}
+                onClick={onClickPlus}
+                // если isAdded  true btn-checked.svg иначе false btn-plus.svg
+                src={
+                  isAddedItem(id)
+                    ? "/image/btn-checked.svg"
+                    : "/image/btn-plus.svg"
+                }
+                alt="Plus"
+              />
+            )}
           </div>
         </>
       )}
