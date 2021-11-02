@@ -1,26 +1,47 @@
+// import React from "react";
+// import AppContext from "../context";
+
+// function Info({ title, description, image }) {
+//   const { setCardOpened } = React.useContext(AppContext);
+
+//   return (
+//     <div className="cartEmpty d-flex align-center flex-column flex">
+//       <img
+//         className="mb-20"
+//         width="120px"
+//         // height="120px"
+//         src={image}
+//         alt="cart"
+//       />
+//       <h2>{title} </h2>
+//       <p className="opacity-6">{description}</p>
+//       <button onClick={() => setCardOpened(false)} className="greenButton">
+//         <img src="/image/arrow.svg" alt="Arrow" />
+//         Вернуться назад
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default Info;
+
 import React from "react";
 import AppContext from "../context";
 
-function Info({ title, description, image }) {
-  const { setCardOpened } = React.useContext(AppContext);
+const Info = ({ title, image, description }) => {
+  const { setCartOpened } = React.useContext(AppContext);
 
   return (
-    <div className="cartEmpty d-flex align-center flex-column flex">
-      <img
-        className="mb-20"
-        width="120px"
-        // height="120px"
-        src={image}
-        alt="cart"
-      />
-      <h2>{title} </h2>
+    <div className="cartEmpty d-flex align-center justify-center flex-column flex">
+      <img className="mb-20" width="120px" src={image} alt="Empty" />
+      <h2>{title}</h2>
       <p className="opacity-6">{description}</p>
-      <button onClick={() => setCardOpened(false)} className="greenButton">
-        <img src="/image/arrow.svg" alt="Arrow" />
+      <button onClick={() => setCartOpened(false)} className="greenButton">
+        <img src="image/arrow.svg" alt="Arrow" />
         Вернуться назад
       </button>
     </div>
   );
-}
+};
 
 export default Info;
