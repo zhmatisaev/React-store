@@ -232,6 +232,7 @@ function App() {
     fetchData();
   }, []);
 
+  //   // при нажатия на кнопку плюс функция onAddtoCart добавляет товар в корзину
   const onAddToCart = async (obj) => {
     try {
       const findItem = cartItems.find(
@@ -270,7 +271,10 @@ function App() {
 
   const onRemoveItem = (id) => {
     try {
+      //  onRemoveItem при нажатия удаляет  карточки из корзины и из бэкенде по запросу axios.delete
+
       axios.delete(`https://617310d7110a740017222f6b.mockapi.io/cart/${id}`);
+      // дай мне пред массив возми все что в нем есть и пробежись по нему отфилтруй тот эл которого id который передал в эту функцию
       setCartItems((prev) =>
         prev.filter((item) => Number(item.id) !== Number(id))
       );
@@ -279,6 +283,7 @@ function App() {
       console.error(error);
     }
   };
+  //   //  Функция для добавления в favorites
 
   const onAddToFavorite = async (obj) => {
     try {
@@ -326,10 +331,12 @@ function App() {
       <div className="wrapper clear">
         <Drawer
           items={cartItems}
+          // {/* при клике onClose корзина закроется / будет false */}
           onClose={() => setCartOpened(false)}
           onRemove={onRemoveItem}
           opened={cartOpened}
         />
+        {/* при клике onClickCart корзина откроется  / буде  true */}
 
         <Header onClickCart={() => setCartOpened(true)} />
 
